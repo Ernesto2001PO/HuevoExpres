@@ -1,0 +1,81 @@
+/**
+ * Estilos para la página de productos de HuevoExpress
+ */
+
+.products-page {
+    background-color: #f8f9fa;
+    /* Mismo fondo que los formularios de auth */
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.products-title {
+    font-weight: 700;
+    color: #212529;
+}
+
+.products-subtitle {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.product-card {
+    border: none;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.product-image-container {
+    background-color: #f1f3f5;
+    padding: 2rem;
+    text-align: center;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.product-image {
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.product-name {
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+    flex-grow: 1;
+    /* Asegura que todas las descripciones ocupen un espacio similar */
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #dc3545;
+    /* Color principal de la marca */
+    margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+    font-weight: 600;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    background-color: #dc3545;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.add-to-cart-btn:hover,
+.add-to-cart-btn:focus {
+    background-color: #c82333;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
