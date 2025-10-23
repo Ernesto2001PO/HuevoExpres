@@ -13,6 +13,7 @@ const User = {
             throw error;
         }
     },
+    
     regsitroUsuario: async (userData) => {
         try {
             const response = await axiosInstance.post("/usuario/registro", userData);

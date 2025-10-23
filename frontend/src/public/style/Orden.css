@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.ordenes-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    /* Fondo claro consistente */
+    min-height: calc(100vh - 56px);
+}
+
+.section-title {
+    font-weight: 700;
+    color: #343a40;
+}
+
+.order-card {
+    border: none;
+    border-radius: 0.8rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.order-card-header {
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+}
+
+.order-items-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    border: 1px solid #eee;
+    padding: 0.5rem 0;
+}
+
+.item-list-entry {
+    padding: 0.5rem 0.8rem;
+    border: none;
+    /* Quitamos bordes internos del ListGroup */
+    font-size: 0.9rem;
+}
+
+.item-list-entry:not(:last-child) {
+    border-bottom: 1px dashed #eee;
+    /* Separador sutil */
+}
+
+.fw-medium {
+    /* Clase auxiliar si no la tienes */
+    font-weight: 500 !important;
+}

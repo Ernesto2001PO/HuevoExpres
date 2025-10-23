@@ -1,32 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-// import { useAuth } from '../context/AuthContext'; // Eliminado temporalmente para la corrección
-// import { useCart } from '../context/CartContext'; // Eliminado temporalmente para la corrección
-// import { FaShoppingCart, FaUser } from 'react-icons/fa'; // Eliminado temporalmente para la corrección
-import { Navbar, Nav, NavDropdown, Container, Badge } from 'react-bootstrap';
-// import { LinkContainer } from 'react-router-bootstrap'; // Eliminado temporalmente para la corrección
-
-// --- Datos de simulación para corregir errores de importación ---
-const useAuth = () => ({
-    user: { name: 'Ernesto' },
-    isAuthenticated: false, // Cambia a 'false' para ver el estado de "no logueado"
-    logout: () => console.log('Cerrando sesión...'),
-});
-
-const useCart = () => ({
-    cart: { totalItems: 3 },
-});
-// --- Fin de los datos de simulación ---
-
+import { Link,  } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { useAuth } from "../hook/useAuth"; 
 
 const AppNavbar = () => {
-    const { user, logout, isAuthenticated } = useAuth();
-    const { cart } = useCart();
-    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
+    //const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout();
-        navigate('/');
+        logout(); 
     };
 
     return (
@@ -46,32 +28,23 @@ const AppNavbar = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                         <Nav.Link as={Link} to="/productos">Productos</Nav.Link>
+                        {/* Muestra "Ordenes" solo si el usuario está logueado */}
                         {isAuthenticated && (
-                            <Nav.Link as={Link} to="/orders">Pedidos</Nav.Link>
+                            <Nav.Link as={Link} to="/ordenes">Mis ordenes</Nav.Link>
                         )}
                     </Nav>
 
-                    {/* Menú de Usuario y Carrito */}
+                    {/* Menú de Usuario */}
                     <Nav>
                         {isAuthenticated ? (
-                            <>
-                                <Nav.Link as={Link} to="/cart" className="position-relative">
-                                    <span role="img" aria-label="cart">🛒</span> {/* Icono reemplazado */}
-                                    {cart.totalItems > 0 && (
-                                        <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">
-                                            {cart.totalItems}
-                                        </Badge>
-                                    )}
-                                </Nav.Link>
-                                <NavDropdown title={<><span role="img" aria-label="user">👤</span> {user?.name}</>} id="basic-nav-dropdown" align="end">
-                                    <NavDropdown.Item as={Link} to="/profile">Mi Perfil</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to="/orders">Mis Pedidos</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item onClick={handleLogout}>
-                                        Cerrar Sesión
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            </>
+                            <NavDropdown title={`Bienvenido, ${localStorage.getItem('nombre')}`} id="basic-nav-dropdown" align="end">
+                                <NavDropdown.Item as={Link} to="/perfil">Mi Perfil</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/ordenes">Mis ordenes</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={handleLogout}>
+                                    Cerrar Sesión
+                                </NavDropdown.Item>
+                            </NavDropdown>
                         ) : (
                             <>
                                 <Nav.Link as={Link} to="/login">Iniciar Sesión</Nav.Link>
@@ -86,4 +59,3 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
-

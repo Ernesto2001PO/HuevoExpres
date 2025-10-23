@@ -31,11 +31,12 @@ function Login() {
 
         setLoading(true);
         try {
-            // Ahora usa tu userRepository real
             const response = await userRepository.loginUsuario({ email, password });
             if (response && response.token) {
                 localStorage.setItem('token', response.token);
-                alert(`Bienvenido: ${response.email} ` )
+                localStorage.setItem('nombre', response.nombre);
+                localStorage.setItem('id', response.id);
+                alert(`Bienvenido: ${response.nombre} ` )
                 navigate("/");
             } else {
                 setError("Credenciales incorrectas. Por favor, verifica tu correo y contraseña.");

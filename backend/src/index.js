@@ -18,6 +18,8 @@ app.use(cors({
 //RUTAS
 const authRoutes = require('./routes/auth.routes'); 
 const productoRoutes = require('./routes/producto.routes')
+const carritoRoutes = require('./routes/carrito.routes');
+const ordenRoutes = require('./routes/orden.routes')
 
 
 
@@ -25,6 +27,10 @@ const productoRoutes = require('./routes/producto.routes')
 app.use(express.json());
 app.use('/api/usuario', authRoutes);
 app.use('/api/producto', productoRoutes);
+app.use('/api/carrito', carritoRoutes);
+app.use('/api/orden', ordenRoutes);
+
+
 
 
 

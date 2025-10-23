@@ -20,7 +20,7 @@ const Home = () => {
                         </p>
                         <div className="d-grid gap-3 d-sm-flex">
                             <Link to="/productos" className="btn btn-light btn-lg px-4 fw-bold">
-                                <span role="img" aria-label="shopping bag" className="d-inline me-2">HuevoIMG</span>
+                                <span role="img" aria-label="shopping bag" className="d-inline me-2"></span>
                                 Ver Productos
                             </Link>
                             <Link to="/about" className="btn btn-outline-light btn-lg px-4">

@@ -14,19 +14,10 @@ export const useAuth = (shouldRedirect) => {
         }
     }, [isAuthenticated]);
 
-    const login = (token, nombre) => {
-        localStorage.setItem("token", token);
-        localStorage.setItem("nombre", JSON.stringify(nombre));
-        setIsAuthenticated(true);
 
-
-    }
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("nombre");
-        localStorage.removeItem("id_usuario");
-        localStorage.removeItem("email");
-        localStorage.removeItem("es_admin");
         setIsAuthenticated(false);
         navigate("/");
     }
@@ -34,7 +25,6 @@ export const useAuth = (shouldRedirect) => {
 
     return {
         isAuthenticated,
-        login,
         logout,
 
     }

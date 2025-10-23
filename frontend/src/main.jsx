@@ -10,8 +10,9 @@ import { CartProvider } from './context/CartContext';
 import AppNavbar  from './components/AppNavbar';
 import Registro from './pages/Regsitro';
 import Productos from './pages/Productos';
-
-// --- Renderizado de la Aplicación ---
+import Carrito from './pages/Carrito';
+import About from './pages/About';
+import Ordenes from './pages/Ordenes';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,16 +25,12 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/about" element={<About />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/productos" element={<Productos />} />
-
-
-
-            {/* Agrega aquí el resto de tus rutas */}
+            <Route path="/carrito" element={<Carrito />} />
+            <Route path="/ordenes" element={<Ordenes />} />
           </Routes>
-          
-          {/* Aquí podrías poner un Footer si también quieres que sea global */}
-
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

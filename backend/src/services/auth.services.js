@@ -13,15 +13,19 @@ const login = async (email, password) => {
         throw { status: 401, message: "Fallo de autenticación (usuario no encontrado)" };
     }
 
-    // 🔹 Comparar password con bcrypt
     const validPassword = await utils.compararPassword(password, usuario.password_hash);
     if (!validPassword) {
         throw { status: 401, message: "Fallo de autenticación (contraseña incorrecta)" };
     }
 
-    // 🔹 Generar JWT
     const token = utils.generarToken(usuario);
-    return token;
+    const nombre = usuario.nombre
+    
+    return {
+        id: usuario.id,
+        token,
+        nombre
+    };
 };
 
 const verifyToken = (req, res, next) => {
@@ -32,9 +36,10 @@ const verifyToken = (req, res, next) => {
 
     try {
         const payload = jwt.verify(token, process.env.API_SECRET_KEY_JWT);
-        req.Usuario = { id: payload.id, email: payload.email };
+        req.usuario = { id: payload.id, email: payload.email }; 
         next();
     } catch (error) {
+        console.error(" Error al verificar token:", error.message);
         return res.status(403).json({ message: "Token no válido" });
     }
 };
