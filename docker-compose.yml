@@ -1,0 +1,84 @@
+# Especifica la versión de la sintaxis de Docker Compose que estás usando.
+# '3.8' es una versión moderna y está perfecto.
+version: '3.8'
+
+# "services:" es la sección principal. Es la lista de todas las "cajas" 
+# (contenedores) que quieres que Docker Compose maneje.
+services:
+
+  # --- 1. Tu Base de Datos Vectorial ---
+  
+  # "qdrant:" es el nombre que TÚ le das a este servicio. 
+  # Puedes llamarlo "db_vectorial" si quieres, pero "qdrant" es claro.
+  qdrant:
+    # "image:" le dice a Docker qué "plano" o "plantilla" usar.
+    # "qdrant/qdrant:latest" significa "ve a Docker Hub, busca la
+    # imagen oficial de qdrant y trae la versión más reciente (latest)".
+    image: qdrant/qdrant:latest
+    
+    # "ports:" define cómo te comunicas con el contenedor desde TU máquina.
+    # Es un "mapeo" de puertos.
+    ports:
+      # - "TU_PC:DENTRO_DEL_CONTENEDOR"
+      # Esto significa: "Cualquier cosa que llegue al puerto 6333 de mi 
+      # computadora (localhost:6333) debe ser redirigida al puerto 6333
+      # DENTRO del contenedor de Qdrant".
+      - "6333:6333" # Puerto para la API REST
+      - "6334:6334" # Puerto para gRPC
+      
+    # "volumes:" es para la persistencia de datos.
+    # Los contenedores se borran y se pierden los datos al reiniciarlos.
+    # "volumes" soluciona esto.
+    volumes:
+      # - "CARPETA_EN_TU_PC:CARPETA_DENTRO_DEL_CONTENEDOR"
+      # Esto le dice a Docker: "Guarda todo lo que el contenedor escriba 
+      # en su carpeta '/qdrant/storage' en una carpeta real en mi PC 
+      # llamada './qdrant_storage'".
+      # Así, si apagas el contenedor, tus vectores no se pierden.
+      - ./qdrant_storage:/qdrant/storage 
+      
+    # "environment:" te permite pasar variables de entorno al contenedor,
+    # como si fueran configuraciones iniciales.
+    environment:
+      # Simplemente le dice a Qdrant que no envíe datos de telemetría.
+      - QDRANT__TELEMETRY_DISABLED: "true"
+
+  # --- 2. Tu Base de Datos Tradicional ---
+  
+  # "postgres:" es el nombre de tu segundo servicio.
+  postgres:
+    # "image:" le dice que use la plantilla oficial de Postgres, versión 15.
+    image: postgres:15
+    
+    # "environment:" aquí es CRÍTICO. Así es como configuras
+    # tu base de datos por primera vez.
+    environment:
+      POSTGRES_USER: tu_usuario     # El usuario que creará
+      POSTGRES_PASSWORD: tu_clave # La contraseña para ese usuario
+      POSTGRES_DB: mi_app_db      # El nombre de la base de datos a crear
+      
+    # "ports:" Mapea el puerto de tu PC 5432 al puerto 5432 de Postgres
+    # dentro del contenedor.
+    ports:
+      - "5432:5432"
+      
+    # "volumes:" Igual que con Qdrant. Guarda los datos de Postgres
+    # en una carpeta local './postgres_data' para que no se pierdan.
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  # --- 3. Tu Caché ---
+  
+  # "redis:" es el nombre de tu tercer servicio.
+  redis:
+    # "image:" usa la plantilla oficial de Redis, versión 7.
+    image: redis:7
+    
+    # "ports:" Mapea el puerto 6379 (el puerto por defecto de Redis)
+    # de tu PC al puerto 6379 del contenedor.
+    ports:
+      - "6379:6379"
+      
+    # NOTA: Redis aquí no tiene "volumes". Esto significa que si
+    # reinicias el contenedor, los datos de caché se perderán.
+    # Para caché, ¡esto es normal y está bien!

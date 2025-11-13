@@ -33,7 +33,6 @@ const Carrito = {
     },
     actualizarCantidadItem : async (itemId, cantidad) => {
         try {
-            // La URL ahora incluye el itemId. El segundo argumento es el body de la petición.
             const response = await axiosInstance.put(`/carrito/items/${itemId}`, { cantidad });
             return response.data;
         } catch (error) {

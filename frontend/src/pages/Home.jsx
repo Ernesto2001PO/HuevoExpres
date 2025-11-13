@@ -1,20 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-
 const Home = () => {
     return (
-        
+
         <div>
             {/* Hero Section */}
-            <section className="bg-danger bg-gradient text-white">
+            <section className="bg-success bg-gradient text-white">
                 <div className="container py-5">
                     <div className="py-5 col-lg-8">
                         <h1 className="display-3 fw-bold mb-4">
                             Huevos Frescos de <span className="text-warning">Calidad Premium</span>
                         </h1>
-                        <p className="fs-5 mb-4 text-white-50">
+                        <p className="fs-5 mb-4 " style={{color : "white"}}>
                             Descubre la diferencia de nuestros huevos frescos, directamente del productor a tu mesa.
                             Calidad garantizada y sabor excepcional.
                         </p>
@@ -23,7 +21,7 @@ const Home = () => {
                                 <span role="img" aria-label="shopping bag" className="d-inline me-2"></span>
                                 Ver Productos
                             </Link>
-                            <Link to="/about" className="btn btn-outline-light btn-lg px-4">
+                            <Link to="/nosotros" className="btn btn-outline-light btn-lg px-4">
                                 Conoce Más
                             </Link>
                         </div>
@@ -45,7 +43,7 @@ const Home = () => {
 
                     <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
                         <div className="col text-center">
-                            <div className="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
+                            <div className="d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
                                 <span className="fs-3" role="img" aria-label="leaf">🌿</span>
                             </div>
                             <h3 className="fs-4 fw-semibold mb-2">100% Natural</h3>
@@ -55,7 +53,7 @@ const Home = () => {
                         </div>
 
                         <div className="col text-center">
-                            <div className="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
+                            <div className="d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
                                 <span className="fs-3" role="img" aria-label="truck">🚚</span>
                             </div>
                             <h3 className="fs-4 fw-semibold mb-2">Entrega Rápida</h3>
@@ -65,7 +63,7 @@ const Home = () => {
                         </div>
 
                         <div className="col text-center">
-                            <div className="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
+                            <div className="d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle mb-3" style={{ width: '64px', height: '64px' }}>
                                 <span className="fs-3" role="img" aria-label="star">⭐</span>
                             </div>
                             <h3 className="fs-4 fw-semibold mb-2">Calidad Premium</h3>
@@ -93,24 +91,24 @@ const Home = () => {
                         <div className="col">
                             <div className="card h-100 text-center shadow-sm">
                                 <div className="card-body p-4">
-                                    <div className="d-inline-flex align-items-center justify-content-center bg-warning-subtle rounded-circle mb-3" style={{ width: '80px', height: '80px' }}>
+                                    <div className="d-inline-flex align-items-center justify-content-center bg-success-subtle rounded-circle mb-3" style={{ width: '80px', height: '80px' }}>
                                         <span className="fs-2">🥚</span>
                                     </div>
                                     <h3 className="fs-4 fw-semibold mb-2">Huevos Medianos</h3>
                                     <p className="text-muted mb-3">Perfectos para el consumo diario</p>
-                                    <span className="fs-3 fw-bold text-danger">$2.50</span>
+                                    <span className="fs-3 fw-bold text-success">$2.50</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col">
                             <div className="card h-100 text-center shadow-sm">
                                 <div className="card-body p-4">
-                                    <div className="d-inline-flex align-items-center justify-content-center bg-warning-subtle rounded-circle mb-3" style={{ width: '80px', height: '80px' }}>
+                                    <div className="d-inline-flex align-items-center justify-content-center bg-success-subtle rounded-circle mb-3" style={{ width: '80px', height: '80px' }}>
                                         <span className="fs-2">🥚</span>
                                     </div>
                                     <h3 className="fs-4 fw-semibold mb-2">Huevos Grandes</h3>
                                     <p className="text-muted mb-3">Ideales para cocinar y hornear</p>
-                                    <span className="fs-3 fw-bold text-danger">$3.00</span>
+                                    <span className="fs-3 fw-bold text-success">$3.00</span>
                                 </div>
                             </div>
                         </div>
@@ -122,14 +120,16 @@ const Home = () => {
                                     </div>
                                     <h3 className="fs-4 fw-semibold mb-2">Huevos Orgánicos</h3>
                                     <p className="text-muted mb-3">Certificados orgánicos, máxima calidad</p>
-                                    <span className="fs-3 fw-bold text-danger">$4.50</span>
+                                    {/* text-success */}
+                                    <span className="fs-3 fw-bold text-success">$4.50</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div className="text-center mt-5">
-                        <Link to="/productos" className="btn btn-danger btn-lg">
+                        {/* btn-success */}
+                        <Link to="/productos" className="btn btn-success btn-lg">
                             Ver Todos los Productos
                         </Link>
                     </div>
@@ -137,7 +137,7 @@ const Home = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-5 bg-danger text-white">
+            <section className="py-5 bg-success text-white">
                 <div className="container text-center py-5">
                     <h2 className="display-5 fw-bold mb-3">
                         ¿Listo para probar la diferencia?
@@ -160,4 +160,3 @@ const Home = () => {
 };
 
 export default Home;
-

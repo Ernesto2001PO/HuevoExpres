@@ -1,12 +1,12 @@
 const express = require('express');
 var cors = require('cors')
+const path = require('path'); 
 
 require('dotenv').config();
 const db = require('./models');
 
 
 const app = express();
-
 
 app.use(cors({
   origin: 'http://localhost:5173',
@@ -20,6 +20,7 @@ const authRoutes = require('./routes/auth.routes');
 const productoRoutes = require('./routes/producto.routes')
 const carritoRoutes = require('./routes/carrito.routes');
 const ordenRoutes = require('./routes/orden.routes')
+const direccionRoutes = require('./routes/direccion.routes')
 
 
 
@@ -29,12 +30,16 @@ app.use('/api/usuario', authRoutes);
 app.use('/api/producto', productoRoutes);
 app.use('/api/carrito', carritoRoutes);
 app.use('/api/orden', ordenRoutes);
+app.use('/api/direccion', direccionRoutes);
+
 
 
 
 
 
 const PORT = process.env.PORT || 3000;
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+
 
 
 

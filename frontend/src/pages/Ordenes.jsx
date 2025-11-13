@@ -30,6 +30,9 @@ function Ordenes() {
         };
 
         fetchOrdenes();
+
+
+
     }, []);
 
     const formatDate = (dateString) => {

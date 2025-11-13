@@ -13,6 +13,9 @@ function Productos() {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth(false); 
 
+    const backendUrl = 'http://localhost:3000'; 
+
+
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -46,7 +49,7 @@ function Productos() {
             navigate("/login");
             return;
         }
-
+    
         try {
             const usuarioId = localStorage.getItem("id"); 
             const itemAgregado = await carritoRepository.agregarItem({
@@ -99,9 +102,13 @@ function Productos() {
                     {productos.map((product) => (
                         <Col key={product.id}>
                             <Card className="h-100 product-card shadow-sm">
-                                <div className="product-image-container">
-                                    <span className="product-image">🥚</span>
-                                </div>
+                                <Card.Img
+                                    variant="top"
+                                    src={`${backendUrl}${product.imageUrl}`}
+                                    alt={product.nombre}
+                                    className="product-image-custom" 
+                                />
+
                                 <Card.Body className="d-flex flex-column text-center">
                                     <Card.Title as="h5" className="product-name">
                                         {product.nombre}
@@ -110,7 +117,7 @@ function Productos() {
                                         {product.descripcion}
                                     </Card.Text>
                                     <div className="mt-auto">
-                                        <p className="product-price">${product.precio}</p>
+                                        <p className="product-price">{product.precio} Bs </p>
                                         <Button
                                             variant="danger"
                                             className="w-100 add-to-cart-btn"

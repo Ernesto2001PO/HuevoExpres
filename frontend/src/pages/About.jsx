@@ -7,38 +7,37 @@ const About = () => {
         {
             name: 'Ernesto Paz',
             role: 'Fundador y CEO',
-            imageUrl: 'https://placehold.co/400x400/dc3545/white?text=EP',
+            imageUrl: 'https://placehold.co/400x400/198754/white?text=EP',
             bio: 'Apasionado por la calidad y la agricultura sostenible, Ernesto fundó HuevoExpress para llevar los mejores huevos del campo a la ciudad.'
         },
         {
             name: 'Ana García',
             role: 'Jefa de Operaciones',
-            imageUrl: 'https://placehold.co/400x400/ffc107/white?text=AG',
+            imageUrl: 'https://placehold.co/400x400/198754/white?text=AG',
             bio: 'Ana se asegura de que cada pedido se procese con eficiencia y que tus huevos lleguen frescos y a tiempo a tu puerta.'
         },
         {
             name: 'Carlos Mendoza',
             role: 'Encargado de Calidad',
-            imageUrl: 'https://placehold.co/400x400/28a745/white?text=CM',
+            imageUrl: 'https://placehold.co/400x400/198754/white?text=CM',
             bio: 'Con un ojo experto para el detalle, Carlos supervisa que cada huevo cumpla con nuestros altísimos estándares de calidad.'
         }
     ];
 
     return (
         <>
-            {/* Estilos CSS integrados para solucionar el error de importación */}
             <style>
                 {`
                     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
                     :root {
-                        --primary-red: #dc3545;
+                        --primary-green: #198754;
                         --font-body: 'Poppins', sans-serif;
                     }
                     .about-page {
                         font-family: var(--font-body);
                     }
                     .about-hero {
-                        background-color: var(--primary-red);
+                        background-color: var(--primary-green);
                         padding: 5rem 0;
                     }
                     .about-section {
@@ -78,7 +77,8 @@ const About = () => {
                         margin: 2rem 0;
                     }
                     .cta-section .btn {
-                        color: var(--primary-red);
+                         /* <-- CAMBIO: Variable a verde */
+                        color: var(--primary-green);
                     }
                 `}
             </style>
@@ -155,7 +155,7 @@ const About = () => {
                                     <Card.Img variant="top" src={member.imageUrl} className="team-img" />
                                     <Card.Body>
                                         <Card.Title as="h5" className="fw-bold">{member.name}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-danger">{member.role}</Card.Subtitle>
+                                        <Card.Subtitle className="mb-2 text-success">{member.role}</Card.Subtitle>
                                         <Card.Text className="text-muted small">
                                             {member.bio}
                                         </Card.Text>
@@ -166,8 +166,33 @@ const About = () => {
                     </Row>
                 </Container>
 
+                <div className="bg-light">
+                    <Container className="py-5 about-section">
+                        <h2 className="text-center fw-bold mb-5">Encuéntranos</h2>
+                        <Row className="justify-content-center">
+                            <Col md={10} lg={8}>
+                                <p className="text-center text-muted mb-4">
+                                    Visita nuestra central para recogidas o simplemente para saludar.
+                                    ¡Estamos en el corazón de la ciudad!
+                                </p>
+
+                                <div className="ratio ratio-16x9 rounded shadow">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7600.243229145735!2d-63.1662583!3d-17.738908!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e77ddaee851d%3A0xd43e282c6fd2d24e!2sEscuela%20de%20F%C3%BAtbol%20Panenka%20Academy!5e0!3m2!1ses-419!2sbo!4v1762378070943!5m2!1ses-419!2sbo"
+                                        style={{ border: 0 }}
+                                        allowFullScreen={true}
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title="Ubicación de HuevoExpress"
+                                    ></iframe>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+
                 {/* Sección Call to Action  */}
-                <div className="bg-danger">
+                <div className="bg-success">
                     <Container className="py-5 text-center text-white cta-section">
                         <h2 className="fw-bold">¿Listo para Probar la Diferencia?</h2>
                         <p className="lead my-4">Únete a la familia HuevoExpress y descubre el verdadero sabor de los huevos frescos.</p>
@@ -182,4 +207,3 @@ const About = () => {
 };
 
 export default About;
-

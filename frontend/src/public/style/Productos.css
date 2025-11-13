@@ -60,7 +60,7 @@
 .product-price {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #dc3545;
+    color: #157347;
     /* Color principal de la marca */
     margin-bottom: 1rem;
 }
@@ -69,13 +69,13 @@
     font-weight: 600;
     padding: 0.6rem;
     border-radius: 0.5rem;
-    background-color: #dc3545;
+    background-color: #157347;
     border: none;
     transition: all 0.2s ease;
 }
 
 .add-to-cart-btn:hover,
 .add-to-cart-btn:focus {
-    background-color: #c82333;
+    background-color: #157347;
     box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }

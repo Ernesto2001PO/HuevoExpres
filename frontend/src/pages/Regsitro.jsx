@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import userRepository from "../repositories/UserRepository";
-import "../public/style/Registro.css";
+import "../public/style/Login.css";
 
 function Registro() {
     const [nombre, setNombre] = useState("");
@@ -13,7 +13,6 @@ function Registro() {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        // 🔹 Validaciones básicas
         if (!nombre.trim() || !email.trim() || !password.trim()) {
             alert("Por favor, completa todos los campos.");
             return;

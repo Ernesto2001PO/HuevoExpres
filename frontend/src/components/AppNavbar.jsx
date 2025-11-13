@@ -1,22 +1,21 @@
 import React from 'react';
-import { Link,  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import { useAuth } from "../hook/useAuth"; 
+import { useAuth } from "../hook/useAuth";
 
 const AppNavbar = () => {
     const { isAuthenticated, logout } = useAuth();
-    //const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout(); 
+        logout();
     };
 
     return (
-        <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
+        <Navbar bg="white" expand="lg" sticky="top" className="shadow">
             <Container>
                 {/* Logo */}
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
-                    <div className="bg-danger rounded-circle d-flex align-items-center justify-content-center me-2" style={{ width: '32px', height: '32px' }}>
+                    <div className="bg-success rounded-circle d-flex align-items-center justify-content-center me-2" style={{ width: '32px', height: '32px' }}>
                         <span className="text-white fw-bold fs-6">H</span>
                     </div>
                     <span className="fw-bold text-dark">HuevoExpress</span>
@@ -28,7 +27,8 @@ const AppNavbar = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                         <Nav.Link as={Link} to="/productos">Productos</Nav.Link>
-                        {/* Muestra "Ordenes" solo si el usuario está logueado */}
+                        <Nav.Link as={Link} to="/nosotros">Nuestra historia</Nav.Link>
+
                         {isAuthenticated && (
                             <Nav.Link as={Link} to="/ordenes">Mis ordenes</Nav.Link>
                         )}
@@ -47,8 +47,12 @@ const AppNavbar = () => {
                             </NavDropdown>
                         ) : (
                             <>
-                                <Nav.Link as={Link} to="/login">Iniciar Sesión</Nav.Link>
-                                <Nav.Link as={Link} to="/register" className="btn btn-danger text-white ms-2 px-3">Registrarse</Nav.Link>
+                                <Nav.Link as={Link} to="/login" className="btn btn-outline-success me-2">
+                                    Iniciar Sesión
+                                </Nav.Link>
+                                <Nav.Link as={Link} to="/register" className="btn btn-success text-white px-3">
+                                    Registrarse
+                                </Nav.Link>
                             </>
                         )}
                     </Nav>

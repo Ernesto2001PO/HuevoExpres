@@ -1,4 +1,4 @@
-const { Carrito, CarritoItem, Orden, OrdenDetalle, Producto, sequelize } = require('../models');
+const { Carrito, CarritoItem, Orden, OrdenDetalle, Producto, Direccion, sequelize } = require('../models');
 
 const crearOrden = async (usuarioId, itemsRecibidos) => {
     if (!itemsRecibidos || !Array.isArray(itemsRecibidos) || itemsRecibidos.length === 0) {
@@ -27,7 +27,6 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
                 throw { status: 400, message: `Stock insuficiente para "${productoDB.nombre}". Solo quedan ${productoDB.stock}.` };
 
             }
-
 
             const subtotal = productoDB.precio * item.cantidad;
             totalCalculado += subtotal;
@@ -81,18 +80,24 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
 };
 
 const obtenerOrdenDelUsuario = async (usuarioId) => {
-    
 
     const ordenes = await Orden.findAll({
-        where: { usuarioId },
-        include: {
-            model: OrdenDetalle,
-            as: 'items',
-            include: {
-                model: Producto,
-                as: 'producto'
+        where: { usuarioId: usuarioId }, 
+
+        include: [
+            {
+                model: OrdenDetalle,
+                as: 'items',
+                include: {
+                    model: Producto,
+                    as: 'producto'
+                }
+            },
+            {
+                model: Direccion, 
+                as: 'direccion'
             }
-        },
+        ],
         order: [['fecha', 'DESC']]
     });
     return ordenes;
