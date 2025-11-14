@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, ListGroup, Badge, Spinner, Alert } from 'react-bootstrap';
 import OrdenRepository from '../repositories/OrdenRepository';
-import '../public/style/Orden.css'; 
+import '../public/style/Orden.css';
 
 function Ordenes() {
     const [ordenes, setOrdenes] = useState([]);
@@ -23,7 +23,7 @@ function Ordenes() {
             } catch (err) {
                 console.error("Error al obtener las órdenes:", err);
                 setError(err.response?.data?.message || "No se pudieron cargar tus órdenes.");
-                setOrdenes([]); 
+                setOrdenes([]);
             } finally {
                 setLoading(false);
             }
@@ -42,7 +42,7 @@ function Ordenes() {
             return new Date(dateString).toLocaleDateString('es-ES', options);
         } catch (e) {
             console.log(e);
-            return dateString; 
+            return dateString;
         }
     };
 
@@ -94,6 +94,11 @@ function Ordenes() {
                                 <Card.Body>
                                     <Card.Text>
                                         <strong>Fecha:</strong> {formatDate(orden.fecha)} <br />
+                                        <strong>Dirección: </strong>
+                                        {orden.direccion ? orden.direccion.calle_avenida : 'No especificada'}
+                                        <br />
+                                        {orden.direccion ? orden.direccion.alias : "No especifica"}
+                                        <br />
                                         <strong>Total:</strong> ${orden.total ? parseFloat(orden.total).toFixed(2) : '0.00'}
                                     </Card.Text>
                                     <h6 className="mt-3 mb-2">Productos:</h6>

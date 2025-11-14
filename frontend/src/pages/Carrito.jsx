@@ -9,11 +9,13 @@ import {
     Spinner,
     Form,
     Modal,
-    ListGroup
+    ListGroup,
+    Alert
 } from "react-bootstrap";
 import carritoRepository from "../repositories/CarritoRepository";
 import OrdenRepository from "../repositories/OrdenRepository";
 import direccionRepository from "../repositories/DireccionRepository";
+import MapaSelector from '../components/MapaSelector'; 
 
 function Carrito() {
     const [items, setItems] = useState([]);
@@ -32,7 +34,9 @@ function Carrito() {
         alias: "",
         calle_avenida: "",
         numero: "",
-        referencia_adicional: ""
+        referencia_adicional: "",
+        latitud: null,
+        longitud: null
     });
 
     const fetchCarrito = async () => {
@@ -70,6 +74,7 @@ function Carrito() {
         );
     };
 
+
     const handleAbrirModalDirecciones = async () => {
         if (items.length === 0) {
             alert("El carrito está vacío.");
@@ -100,20 +105,38 @@ function Carrito() {
         }
     };
 
+    const handleMapClick = (latlng) => {
+        console.log("Coordenadas seleccionadas:", latlng);
+        setNuevaDireccion(prev => ({
+            ...prev,
+            latitud: latlng.lat,
+            longitud: latlng.lng
+        }));
+    }
+
+
+
 
 
     const handleGuardarNuevaDireccion = async (e) => {
         e.preventDefault();
+
+        if (!nuevaDireccion.latitud) {
+            alert("Por favor, selecciona una ubicación en el mapa.");
+            return;
+        }
+
         setCreandoDireccion(true);
         try {
             const direccionCreada = await direccionRepository.registroDireccion(nuevaDireccion);
 
             await fetchDirecciones();
-
             setSelectedDireccionId(direccionCreada.id);
-
             setShowFormularioNueva(false);
-            setNuevaDireccion({ alias: "", calle_avenida: "", numero: "", referencia_adicional: "" });
+            setNuevaDireccion({
+                alias: "", calle_avenida: "", numero: "", referencia_adicional: "",
+                latitud: null, longitud: null
+            });
 
         } catch (error) {
             console.error("Error creando dirección:", error);
@@ -274,6 +297,7 @@ function Carrito() {
 
                             {showFormularioNueva && (
                                 <Form onSubmit={handleGuardarNuevaDireccion} className="mt-3 border p-3 rounded">
+                                    {/* ... (Form.Group para Alias, Calle, Número, Referencia) ... */}
                                     <Form.Group className="mb-2">
                                         <Form.Label>Alias (ej. "Casa")</Form.Label>
                                         <Form.Control type="text" name="alias" value={nuevaDireccion.alias} onChange={handleFormChange} required />
@@ -282,15 +306,25 @@ function Carrito() {
                                         <Form.Label>Calle/Avenida</Form.Label>
                                         <Form.Control type="text" name="calle_avenida" value={nuevaDireccion.calle_avenida} onChange={handleFormChange} required />
                                     </Form.Group>
+                                    {/* ... (los otros campos de texto) ... */}
+
+                                    {/* --- ¡NUEVO! --- */}
                                     <Form.Group className="mb-2">
-                                        <Form.Label>Número (Opcional)</Form.Label>
-                                        <Form.Control type="text" name="numero" value={nuevaDireccion.numero} onChange={handleFormChange} />
+                                        <Form.Label>Pin de Entrega:</Form.Label>
+                                        <p className="text-muted small">Haz clic en el mapa para fijar la ubicación.</p>
+                                        <MapaSelector
+                                            onPosicionSeleccionada={handleMapClick}
+                                        />
                                     </Form.Group>
-                                    <Form.Group className="mb-2">
-                                        <Form.Label>Referencia (Opcional)</Form.Label>
-                                        <Form.Control type="text" name="referencia_adicional" value={nuevaDireccion.referencia_adicional} onChange={handleFormChange} />
-                                    </Form.Group>
-                                    <Button type="submit" variant="success" disabled={creandoDireccion}>
+
+                                    {/* Opcional: Mostrar las coordenadas seleccionadas */}
+                                    {nuevaDireccion.latitud && (
+                                        <Alert variant="info" size="sm">
+                                            Ubicación fijada.
+                                        </Alert>
+                                    )}
+
+                                    <Button type="submit" variant="success" disabled={creandoDireccion} className="mt-3">
                                         {creandoDireccion ? <Spinner size="sm" /> : 'Guardar Dirección'}
                                     </Button>
                                 </Form>

@@ -1,6 +1,6 @@
 const { Carrito, CarritoItem, Orden, OrdenDetalle, Producto, Direccion, sequelize } = require('../models');
 
-const crearOrden = async (usuarioId, itemsRecibidos) => {
+const crearOrden = async (usuarioId, itemsRecibidos, direccionId) => {
     if (!itemsRecibidos || !Array.isArray(itemsRecibidos) || itemsRecibidos.length === 0) {
         throw { status: 400, message: "No se proporcionaron items para crear la orden." };
     }
@@ -8,6 +8,15 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
     const t = await sequelize.transaction();
 
     try {
+        const direccionValida = await Direccion.findOne({
+            where: { id: direccionId, usuarioId: usuarioId },
+            transaction: t
+        });
+
+        if (!direccionValida) {
+            throw { status: 404, message: "Dirección no válida o no pertenece al usuario." };
+        }
+
         let totalCalculado = 0;
         const detallesParaGuardar = [];
 
@@ -15,7 +24,6 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
             if (!item.productoId || !item.cantidad || item.cantidad < 1) {
                 throw { status: 400, message: `Item inválido recibido: ${JSON.stringify(item)}` };
             }
-
             const productoDB = await Producto.findByPk(item.productoId, { transaction: t });
             if (!productoDB) {
                 throw { status: 404, message: `Producto con ID ${item.productoId} no encontrado.` };
@@ -25,12 +33,11 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
             }
             if (productoDB.stock < item.cantidad) {
                 throw { status: 400, message: `Stock insuficiente para "${productoDB.nombre}". Solo quedan ${productoDB.stock}.` };
-
             }
+
 
             const subtotal = productoDB.precio * item.cantidad;
             totalCalculado += subtotal;
-
             detallesParaGuardar.push({
                 productoId: item.productoId,
                 cantidad: item.cantidad,
@@ -43,6 +50,7 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
 
         const orden = await Orden.create({
             usuarioId,
+            direccionId: direccionId, 
             total: totalCalculado,
             estado: 'Pendiente'
         }, { transaction: t });
@@ -62,14 +70,20 @@ const crearOrden = async (usuarioId, itemsRecibidos) => {
         await t.commit();
 
         return await Orden.findByPk(orden.id, {
-            include: {
-                model: OrdenDetalle,
-                as: 'items',
-                include: {
-                    model: Producto,
-                    as: 'producto'
+            include: [
+                {
+                    model: OrdenDetalle,
+                    as: 'items',
+                    include: {
+                        model: Producto,
+                        as: 'producto'
+                    }
+                },
+                {
+                    model: Direccion, 
+                    as: 'direccion'  
                 }
-            }
+            ]
         });
 
     } catch (error) {

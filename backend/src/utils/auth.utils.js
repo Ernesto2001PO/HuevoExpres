@@ -16,7 +16,7 @@ module.exports = {
         return jwt.sign(
             { id: usuario.id, email: usuario.email },
             process.env.API_SECRET_KEY_JWT,
-            { expiresIn: "1h" }
+            { expiresIn: "8h" }
         );
     }
 };
